@@ -321,7 +321,8 @@ function renderAdd() {
         </div>
         <div class="form-group">
           <label class="form-label">Use case</label>
-          <select id="f-usecase" class="form-input"><option value="">Select…</option>${useCaseOpts}</select>
+          <input id="f-usecase" class="form-input" placeholder="Select or type your own…" list="usecase-list" autocomplete="off" />
+          <datalist id="usecase-list">${useCaseOpts}</datalist>
         </div>
         <div class="form-group">
           <label class="form-label">Platform used</label>
