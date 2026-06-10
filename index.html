@@ -155,7 +155,7 @@
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx82YY3AVo6shyCbXPEh_xaJmfIrQF-9_a0HWcrtp2MqTguyRiO_uP0TB6lmHk01axDPQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoLgK4KqHRybszB-CynKrvVjfYOrsA1nIdGpYixQ3IwNu1F6X33ELeLpFWIXq6rteNHg/exec";
 const PLATFORMS = ["Claude","ChatGPT","Gemini","Microsoft Copilot","Org Tool","Perplexity","Other"];
 const USE_CASES = ["Writing / Drafting","Summarizing","Policy Research","Job Description","Performance Review","Data Analysis","Employee Comms","Meeting Prep","Other"];
 const OUTCOME_META = {
@@ -172,15 +172,17 @@ let entries = [], prompts = [], filterPlatform="All", filterOutcome="All", filte
 
 // ---- API ----
 async function fetchSheet(sheet) {
-  const res = await fetch(SCRIPT_URL + "?sheet=" + sheet);
+  const res = await fetch(SCRIPT_URL + "?sheet=" + sheet, { redirect: "follow" });
   return res.json();
 }
 
 async function postRow(data) {
+  // Use no-cors with text/plain to avoid CORS preflight issues with Apps Script
   await fetch(SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify(data),
-    headers: { "Content-Type": "text/plain" }
+    headers: { "Content-Type": "text/plain" },
+    mode: "no-cors"
   });
 }
 
@@ -352,9 +354,13 @@ function renderAdd() {
           <input id="f-tags" class="form-input" placeholder="e.g. recruiting, performance" />
         </div>
       </div>
-      <div class="form-group" style="margin-bottom:0">
+      <div class="form-group" style="margin-bottom:14px">
         <label class="form-label">What did you try? What happened?</label>
-        <textarea id="f-notes" class="form-input" rows="4" placeholder="Briefly describe what you tried and what the result was…"></textarea>
+        <textarea id="f-notes" class="form-input" rows="3" placeholder="Briefly describe what you tried and what the result was…"></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Prompt used <span style="color:#334155;font-weight:400;text-transform:none;letter-spacing:0">(optional — paste it here if it worked well)</span></label>
+        <textarea id="f-prompt" class="form-input" rows="3" placeholder="Paste the exact prompt you used…" style="font-family:'Monaco','Courier New',monospace;font-size:12px"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn-primary" onclick="saveEntry()">Save experiment</button>
@@ -369,13 +375,17 @@ async function saveEntry() {
   if (!useCase || !notes) { toast('Please fill in Use case and Notes', '#f87171'); return; }
   const btn = document.querySelector('#view-add .btn-primary');
   btn.textContent = 'Saving…'; btn.disabled = true;
+  const promptText = document.getElementById('f-prompt').value.trim();
+  const outcome = document.getElementById('f-outcome').value;
+  const experimenter = document.getElementById('f-experimenter').value.trim();
+  const platform = document.getElementById('f-platform').value;
   const row = {
     id: Date.now().toString(),
     date: new Date().toISOString().slice(0,10),
-    experimenter: document.getElementById('f-experimenter').value.trim(),
+    experimenter,
     useCase,
-    platform: document.getElementById('f-platform').value,
-    outcome: document.getElementById('f-outcome').value,
+    platform,
+    outcome,
     timeMin: document.getElementById('f-time').value || '0',
     notes,
     tags: document.getElementById('f-tags').value,
@@ -384,10 +394,26 @@ async function saveEntry() {
   try {
     await postRow(row);
     entries.unshift(row);
+    // If a prompt was provided, also save it to the Prompts library
+    if (promptText) {
+      const promptRow = {
+        id: (Date.now()+1).toString(),
+        date: row.date,
+        experimenter,
+        useCase,
+        platform,
+        promptText,
+        outcome,
+        notes: '',
+        sheet: 'Prompts'
+      };
+      await postRow(promptRow);
+      prompts.unshift(promptRow);
+    }
     showView('log');
-    toast('Experiment saved ✓');
+    toast(promptText ? 'Experiment + prompt saved ✓' : 'Experiment saved ✓');
   } catch(e) {
-    toast('Error saving — check your connection', '#f87171');
+    toast('Error saving — try again in a moment', '#f87171');
     btn.textContent = 'Save experiment'; btn.disabled = false;
   }
   renderStats();
