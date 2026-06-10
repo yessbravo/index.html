@@ -9,8 +9,7 @@
   body { font-family: 'Inter', system-ui, sans-serif; background: #090c14; color: #f1f5f9; min-height: 100vh; }
   input, select, textarea, button { font-family: inherit; }
 
-  /* HEADER */
-  .header { 
+  .header {
     background: linear-gradient(135deg, #13172a 0%, #0e1220 100%);
     border-bottom: 1px solid #1e2540;
     padding: 22px 32px 0;
@@ -24,18 +23,10 @@
   .tab { padding: 9px 20px; background: transparent; color: #64748b; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 13px; font-weight: 500; transition: all .15s; border-bottom: 3px solid transparent; }
   .tab.active { color: #f1f5f9; border-bottom-color: #818cf8; background: rgba(129,140,248,.08); font-weight: 700; }
   .tab:hover:not(.active) { color: #94a3b8; }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
 
-  /* STATS */
   .stats-strip { display: flex; gap: 14px; padding: 20px 32px; flex-wrap: wrap; }
-  .stat-card { 
-    flex: 1; min-width: 130px;
-    background: #111827; 
-    border: 1px solid #1e2540; 
-    border-radius: 14px; 
-    padding: 16px 20px;
-    position: relative;
-    overflow: hidden;
-  }
+  .stat-card { flex: 1; min-width: 130px; background: #111827; border: 1px solid #1e2540; border-radius: 14px; padding: 16px 20px; position: relative; overflow: hidden; }
   .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .stat-card.c1::before { background: linear-gradient(90deg, #818cf8, #c084fc); }
   .stat-card.c2::before { background: linear-gradient(90deg, #34d399, #059669); }
@@ -45,57 +36,37 @@
   .stat-value { font-size: 28px; font-weight: 800; color: #f1f5f9; line-height: 1; letter-spacing: -.02em; }
   .stat-sub { font-size: 12px; color: #475569; margin-top: 4px; }
 
-  /* MAIN */
   .main { padding: 24px 32px; }
 
-  /* BUTTONS */
-  .btn-primary { 
-    background: linear-gradient(135deg, #818cf8, #6366f1); 
-    color: #fff; border: none; border-radius: 10px; 
-    padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(99,102,241,.35);
-    transition: transform .1s, box-shadow .1s;
-  }
+  .btn-primary { background: linear-gradient(135deg, #818cf8, #6366f1); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(99,102,241,.35); transition: transform .1s, box-shadow .1s; }
   .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,.45); }
+  .btn-green { background: linear-gradient(135deg, #34d399, #059669); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(52,211,153,.25); transition: transform .1s; }
+  .btn-green:hover { transform: translateY(-1px); }
   .btn-ghost { background: rgba(255,255,255,.05); color: #94a3b8; border: 1px solid #1e2540; border-radius: 10px; padding: 10px 16px; font-size: 13px; cursor: pointer; transition: background .15s; }
   .btn-ghost:hover { background: rgba(255,255,255,.08); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 8px; }
 
-  /* FORM */
-  .form-wrap { background: #111827; border: 1px solid #1e2540; border-radius: 16px; padding: 24px; max-width: 620px; }
+  .form-wrap { background: #111827; border: 1px solid #1e2540; border-radius: 16px; padding: 24px; max-width: 640px; }
   .form-title { font-size: 16px; font-weight: 800; margin-bottom: 20px; }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 0; }
   .form-label { font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; }
-  .form-input { 
-    background: #090c14; border: 1px solid #252d40; border-radius: 9px; 
-    padding: 10px 13px; color: #f1f5f9; font-size: 14px; outline: none; width: 100%;
-    transition: border-color .15s;
-  }
+  .form-input { background: #090c14; border: 1px solid #252d40; border-radius: 9px; padding: 10px 13px; color: #f1f5f9; font-size: 14px; outline: none; width: 100%; transition: border-color .15s; }
   .form-input:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129,140,248,.12); }
   textarea.form-input { resize: vertical; }
   .form-actions { display: flex; gap: 10px; margin-top: 20px; }
 
-  /* FILTERS */
   .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-  .filter-select { 
-    background: #111827; border: 1px solid #1e2540; border-radius: 9px; 
-    padding: 8px 12px; color: #f1f5f9; font-size: 12px; outline: none; cursor: pointer;
-  }
+  .filter-select { background: #111827; border: 1px solid #1e2540; border-radius: 9px; padding: 8px 12px; color: #f1f5f9; font-size: 12px; outline: none; cursor: pointer; }
   .filter-count { font-size: 12px; color: #475569; margin-left: 4px; }
 
-  /* ENTRY CARDS */
   .entries { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
-  .entry-card { 
-    background: #111827; border: 1px solid #1e2540; border-radius: 14px; 
-    padding: 16px 18px; position: relative; overflow: hidden;
-    transition: border-color .2s, transform .15s;
-  }
+  .entry-card { background: #111827; border: 1px solid #1e2540; border-radius: 14px; padding: 16px 18px; position: relative; overflow: hidden; transition: border-color .2s, transform .15s; }
   .entry-card:hover { border-color: #2d3756; transform: translateY(-2px); }
   .entry-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; bottom: 0; border-radius: 14px 0 0 14px; }
   .entry-card.success::before { background: #34d399; }
   .entry-card.partial::before { background: #fbbf24; }
   .entry-card.fail::before { background: #f87171; }
-
   .entry-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
   .entry-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
   .entry-delete { background: none; border: none; color: #334155; cursor: pointer; font-size: 18px; padding: 0; line-height: 1; transition: color .15s; }
@@ -108,17 +79,23 @@
   .entry-date { font-size: 11px; color: #334155; }
   .entry-time { font-size: 11px; color: #334155; }
   .entry-experimenter { font-size: 12px; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-  .entry-experimenter::before { content: ''; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #818cf8, #c084fc); display: inline-flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700; }
-  .entry-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .entry-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
   .entry-tag { font-size: 11px; color: #475569; background: #1a2035; padding: 2px 9px; border-radius: 12px; }
 
-  /* EMPTY */
+  /* PROMPT LIBRARY */
+  .prompt-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+  .prompt-card { background: #111827; border: 1px solid #1e2540; border-radius: 14px; padding: 16px 18px; position: relative; overflow: hidden; transition: border-color .2s, transform .15s; }
+  .prompt-card:hover { border-color: #2d3756; transform: translateY(-2px); }
+  .prompt-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #f472b6, #818cf8); }
+  .prompt-text { font-size: 13px; color: #e2e8f0; line-height: 1.7; margin: 10px 0; background: #0e1220; border: 1px solid #1e2540; border-radius: 8px; padding: 10px 12px; font-family: 'Monaco', 'Courier New', monospace; }
+  .copy-btn { font-size: 11px; color: #818cf8; background: rgba(129,140,248,.1); border: 1px solid rgba(129,140,248,.2); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: background .15s; }
+  .copy-btn:hover { background: rgba(129,140,248,.2); }
+
   .empty { text-align: center; padding: 80px 0; color: #334155; }
-  .empty-icon { font-size: 48px; margin-bottom: 14px; filter: grayscale(30%); }
+  .empty-icon { font-size: 48px; margin-bottom: 14px; }
   .empty-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: #475569; }
   .empty-sub { font-size: 13px; }
 
-  /* INSIGHTS */
   .insights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; max-width: 900px; }
   .insight-card { background: #111827; border: 1px solid #1e2540; border-radius: 14px; padding: 18px 20px; }
   .insight-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -129,21 +106,16 @@
   .insight-details { font-size: 12px; color: #475569; }
   .insight-uses { font-size: 11px; color: #334155; margin-top: 4px; }
 
-  /* TOAST */
-  #toast { 
-    position: fixed; top: 24px; right: 24px; 
-    background: #111827; border: 1px solid #34d399; color: #34d399; 
-    padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; 
-    z-index: 999; display: none;
-    box-shadow: 0 8px 25px rgba(0,0,0,.4);
-    animation: slideIn .2s ease;
-  }
-  @keyframes slideIn { from { opacity:0; transform: translateX(20px); } to { opacity:1; transform: translateX(0); } }
+  .loading { text-align: center; padding: 60px 0; color: #475569; }
+  .spinner { width: 32px; height: 32px; border: 3px solid #1e2540; border-top-color: #818cf8; border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 14px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #toast { position: fixed; top: 24px; right: 24px; background: #111827; border: 1px solid #34d399; color: #34d399; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; z-index: 999; display: none; box-shadow: 0 8px 25px rgba(0,0,0,.4); }
 
   @media (max-width: 640px) {
     .header, .stats-strip, .main { padding-left: 16px; padding-right: 16px; }
     .form-grid { grid-template-columns: 1fr; }
-    .entries { grid-template-columns: 1fr; }
+    .entries, .prompt-cards { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -160,10 +132,14 @@
         <div class="brand-title">AI Experiment Tracker</div>
       </div>
     </div>
-    <button class="btn-primary" onclick="showView('add')">+ Log experiment</button>
+    <div class="header-actions">
+      <button class="btn-green" onclick="showView('add-prompt')">+ Save prompt</button>
+      <button class="btn-primary" onclick="showView('add')">+ Log experiment</button>
+    </div>
   </div>
   <div class="tabs">
     <button class="tab active" id="tab-log" onclick="showView('log')">Experiments</button>
+    <button class="tab" id="tab-prompts" onclick="showView('prompts')">Prompt Library</button>
     <button class="tab" id="tab-insights" onclick="showView('insights')">Insights</button>
   </div>
 </div>
@@ -173,10 +149,13 @@
 <div class="main">
   <div id="view-log"></div>
   <div id="view-add" style="display:none"></div>
+  <div id="view-prompts" style="display:none"></div>
+  <div id="view-add-prompt" style="display:none"></div>
   <div id="view-insights" style="display:none"></div>
 </div>
 
 <script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx82YY3AVo6shyCbXPEh_xaJmfIrQF-9_a0HWcrtp2MqTguyRiO_uP0TB6lmHk01axDPQ/exec";
 const PLATFORMS = ["Claude","ChatGPT","Gemini","Microsoft Copilot","Org Tool","Perplexity","Other"];
 const USE_CASES = ["Writing / Drafting","Summarizing","Policy Research","Job Description","Performance Review","Data Analysis","Employee Comms","Meeting Prep","Other"];
 const OUTCOME_META = {
@@ -189,20 +168,54 @@ const PLATFORM_COLORS = {
   "Microsoft Copilot":"#818cf8","Org Tool":"#94a3b8","Perplexity":"#f472b6","Other":"#fb923c"
 };
 
-let entries = JSON.parse(localStorage.getItem('hr-ai-entries') || 'null') || [
-  { id:1, date:"2026-06-02", useCase:"Job Description",    platform:"Claude",   outcome:"success", timeMin:15, experimenter:"Yess", notes:"Generated a solid HRBP JD in one pass. Needed minor edits for tone.", tags:["recruiting"] },
-  { id:2, date:"2026-06-04", useCase:"Summarizing",        platform:"Org Tool", outcome:"partial",  timeMin:25, experimenter:"Yess", notes:"Uploaded exit interview data but summary was too generic. Missing nuance.", tags:["retention"] },
-  { id:3, date:"2026-06-06", useCase:"Performance Review", platform:"ChatGPT",  outcome:"success", timeMin:20, experimenter:"Yess", notes:"Good at rewriting vague manager feedback into specific, actionable language.", tags:["performance"] },
-];
+let entries = [], prompts = [], filterPlatform="All", filterOutcome="All", filterExperimenter="All", filterPromptPlatform="All", currentView="log";
 
-let filterPlatform="All", filterOutcome="All", filterExperimenter="All", currentView="log";
+// ---- API ----
+async function fetchSheet(sheet) {
+  const res = await fetch(SCRIPT_URL + "?sheet=" + sheet);
+  return res.json();
+}
 
-function save() { localStorage.setItem('hr-ai-entries', JSON.stringify(entries)); }
+async function postRow(data) {
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "text/plain" }
+  });
+}
 
-function toast(msg) {
+// ---- LOAD ----
+async function loadEntries() {
+  showLoading('view-log');
+  try {
+    const data = await fetchSheet('Sheet1');
+    entries = data.filter(r => r.id);
+  } catch(e) { entries = []; }
+  renderLog();
+  renderStats();
+}
+
+async function loadPrompts() {
+  showLoading('view-prompts');
+  try {
+    const data = await fetchSheet('Prompts');
+    prompts = data.filter(r => r.id);
+  } catch(e) { prompts = []; }
+  renderPrompts();
+}
+
+function showLoading(id) {
+  document.getElementById(id).innerHTML = `<div class="loading"><div class="spinner"></div>Loading from Google Sheets…</div>`;
+}
+
+// ---- UTILS ----
+function toast(msg, color) {
   const el = document.getElementById('toast');
-  el.textContent = msg; el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 2500);
+  el.textContent = msg;
+  el.style.borderColor = color||'#34d399';
+  el.style.color = color||'#34d399';
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 2800);
 }
 
 function badge(text, color, bg) {
@@ -213,29 +226,30 @@ function initials(name) {
   return name ? name.trim().split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '?';
 }
 
-function stats() {
+function avatarHtml(name) {
+  const ini = initials(name);
+  return `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#818cf8,#c084fc);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:800;flex-shrink:0">${ini}</span>`;
+}
+
+// ---- STATS ----
+function renderStats() {
   const total = entries.length;
   const successes = entries.filter(e=>e.outcome==='success').length;
   const rate = total ? Math.round(successes/total*100) : 0;
   const counts = {};
   entries.filter(e=>e.outcome==='success').forEach(e=>{ counts[e.platform]=(counts[e.platform]||0)+1; });
   const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
-  const timed = entries.filter(e=>e.timeMin);
-  const avg = timed.length ? Math.round(timed.reduce((s,e)=>s+e.timeMin,0)/timed.length) : 0;
-  const experimenters = [...new Set(entries.map(e=>e.experimenter).filter(Boolean))].length;
-  return { total, rate, top, avg, experimenters };
-}
-
-function renderStats() {
-  const s = stats();
+  const timed = entries.filter(e=>e.timeMin && Number(e.timeMin)>0);
+  const avg = timed.length ? Math.round(timed.reduce((s,e)=>s+Number(e.timeMin),0)/timed.length) : 0;
   document.getElementById('stats-strip').innerHTML = `
-    <div class="stat-card c1"><div class="stat-label">Total logged</div><div class="stat-value">${s.total}</div><div class="stat-sub">experiments</div></div>
-    <div class="stat-card c2"><div class="stat-label">Success rate</div><div class="stat-value">${s.rate}%</div><div class="stat-sub">of attempts</div></div>
-    <div class="stat-card c3"><div class="stat-label">Top platform</div><div class="stat-value" style="font-size:${s.top.length>8?'16px':'22px'};padding-top:2px">${s.top}</div><div class="stat-sub">by successes</div></div>
-    <div class="stat-card c4"><div class="stat-label">Avg time</div><div class="stat-value">${s.avg?s.avg+'m':'—'}</div><div class="stat-sub">per experiment</div></div>
+    <div class="stat-card c1"><div class="stat-label">Total logged</div><div class="stat-value">${total}</div><div class="stat-sub">experiments</div></div>
+    <div class="stat-card c2"><div class="stat-label">Success rate</div><div class="stat-value">${rate}%</div><div class="stat-sub">of attempts</div></div>
+    <div class="stat-card c3"><div class="stat-label">Top platform</div><div class="stat-value" style="font-size:${top.length>8?'15px':'22px'};padding-top:2px">${top}</div><div class="stat-sub">by successes</div></div>
+    <div class="stat-card c4"><div class="stat-label">Saved prompts</div><div class="stat-value">${prompts.length}</div><div class="stat-sub">in library</div></div>
   `;
 }
 
+// ---- LOG ----
 function getExperimenters() {
   return [...new Set(entries.map(e=>e.experimenter).filter(Boolean))].sort();
 }
@@ -247,13 +261,12 @@ function renderLog() {
     (filterOutcome==='All' || e.outcome===filterOutcome) &&
     (filterExperimenter==='All' || e.experimenter===filterExperimenter)
   );
-
   const platformOpts = PLATFORMS.map(p=>`<option${filterPlatform===p?' selected':''}>${p}</option>`).join('');
   const expOpts = experimenters.map(e=>`<option${filterExperimenter===e?' selected':''}>${e}</option>`).join('');
 
   let html = `<div class="filters">
     <select class="filter-select" onchange="filterPlatform=this.value;renderLog()">
-      <option${filterPlatform==='All'?' selected':''} value="All">All platforms</option>${platformOpts}
+      <option value="All"${filterPlatform==='All'?' selected':''}>All platforms</option>${platformOpts}
     </select>
     <select class="filter-select" onchange="filterOutcome=this.value;renderLog()">
       <option value="All"${filterOutcome==='All'?' selected':''}>All outcomes</option>
@@ -265,32 +278,32 @@ function renderLog() {
       <option value="All"${filterExperimenter==='All'?' selected':''}>All experimenters</option>${expOpts}
     </select>`:''}
     <span class="filter-count">${filtered.length} entr${filtered.length===1?'y':'ies'}</span>
+    <button class="btn-ghost btn-sm" onclick="loadEntries()" style="margin-left:auto">↻ Refresh</button>
   </div>`;
 
   if (!filtered.length) {
-    html += `<div class="empty"><div class="empty-icon">🧪</div><div class="empty-title">No experiments yet</div><div class="empty-sub">Log your first one to get started.</div></div>`;
+    html += `<div class="empty"><div class="empty-icon">🧪</div><div class="empty-title">No experiments yet</div><div class="empty-sub">Be the first to log one!</div></div>`;
   } else {
     html += '<div class="entries">';
     filtered.forEach(e => {
-      const om = OUTCOME_META[e.outcome];
+      const om = OUTCOME_META[e.outcome] || OUTCOME_META.partial;
       const pc = PLATFORM_COLORS[e.platform] || '#94a3b8';
-      const tags = e.tags.length ? `<div class="entry-tags">${e.tags.map(t=>`<span class="entry-tag">#${t}</span>`).join('')}</div>` : '';
-      const ini = initials(e.experimenter||'');
-      html += `<div class="entry-card ${e.outcome}">
+      const tagList = e.tags ? e.tags.split(',').map(t=>t.trim()).filter(Boolean) : [];
+      const tags = tagList.length ? `<div class="entry-tags">${tagList.map(t=>`<span class="entry-tag">#${t}</span>`).join('')}</div>` : '';
+      html += `<div class="entry-card ${e.outcome||'partial'}">
         <div class="entry-header">
-          <div class="entry-title">${e.useCase}</div>
-          <button class="entry-delete" onclick="deleteEntry(${e.id})" title="Remove">×</button>
+          <div class="entry-title">${e.useCase||'—'}</div>
         </div>
         <div class="entry-badges">
-          ${badge(e.platform, pc)}
+          ${badge(e.platform||'—', pc)}
           ${badge(om.label, om.color, om.bg)}
         </div>
-        <p class="entry-notes">${e.notes}</p>
+        <p class="entry-notes">${e.notes||''}</p>
         <div class="entry-footer">
-          ${e.experimenter ? `<div class="entry-experimenter" style="--ini:'${ini}'">${e.experimenter}</div>` : '<div></div>'}
+          ${e.experimenter ? `<div class="entry-experimenter">${avatarHtml(e.experimenter)}&nbsp;${e.experimenter}</div>` : '<div></div>'}
           <div class="entry-meta">
-            ${e.timeMin?`<span class="entry-time">${e.timeMin}m</span>`:''}
-            <span class="entry-date">${e.date}</span>
+            ${e.timeMin&&Number(e.timeMin)>0?`<span class="entry-time">${e.timeMin}m</span>`:''}
+            <span class="entry-date">${e.date||''}</span>
           </div>
         </div>
         ${tags}
@@ -299,15 +312,9 @@ function renderLog() {
     html += '</div>';
   }
   document.getElementById('view-log').innerHTML = html;
-
-  // inject avatar initials via JS since CSS custom property trick is limited
-  document.querySelectorAll('.entry-experimenter').forEach(el => {
-    const name = el.textContent.trim();
-    const ini = initials(name);
-    el.innerHTML = `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#818cf8,#c084fc);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:white;font-weight:800;flex-shrink:0">${ini}</span>${name}`;
-  });
 }
 
+// ---- ADD EXPERIMENT ----
 function renderAdd() {
   const platformOpts = PLATFORMS.map(p=>`<option>${p}</option>`).join('');
   const useCaseOpts = USE_CASES.map(u=>`<option>${u}</option>`).join('');
@@ -345,7 +352,7 @@ function renderAdd() {
           <input id="f-tags" class="form-input" placeholder="e.g. recruiting, performance" />
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="margin-bottom:0">
         <label class="form-label">What did you try? What happened?</label>
         <textarea id="f-notes" class="form-input" rows="4" placeholder="Briefly describe what you tried and what the result was…"></textarea>
       </div>
@@ -356,6 +363,160 @@ function renderAdd() {
     </div>`;
 }
 
+async function saveEntry() {
+  const useCase = document.getElementById('f-usecase').value.trim();
+  const notes = document.getElementById('f-notes').value.trim();
+  if (!useCase || !notes) { toast('Please fill in Use case and Notes', '#f87171'); return; }
+  const btn = document.querySelector('#view-add .btn-primary');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  const row = {
+    id: Date.now().toString(),
+    date: new Date().toISOString().slice(0,10),
+    experimenter: document.getElementById('f-experimenter').value.trim(),
+    useCase,
+    platform: document.getElementById('f-platform').value,
+    outcome: document.getElementById('f-outcome').value,
+    timeMin: document.getElementById('f-time').value || '0',
+    notes,
+    tags: document.getElementById('f-tags').value,
+    sheet: 'Sheet1'
+  };
+  try {
+    await postRow(row);
+    entries.unshift(row);
+    showView('log');
+    toast('Experiment saved ✓');
+  } catch(e) {
+    toast('Error saving — check your connection', '#f87171');
+    btn.textContent = 'Save experiment'; btn.disabled = false;
+  }
+  renderStats();
+}
+
+// ---- PROMPTS ----
+function renderPrompts() {
+  const platformOpts = PLATFORMS.map(p=>`<option${filterPromptPlatform===p?' selected':''}>${p}</option>`).join('');
+  const useCaseOpts = USE_CASES.map(u=>`<option>${u}</option>`).join('');
+  const filtered = prompts.filter(p =>
+    filterPromptPlatform==='All' || p.platform===filterPromptPlatform
+  );
+
+  let html = `<div class="filters">
+    <select class="filter-select" onchange="filterPromptPlatform=this.value;renderPrompts()">
+      <option value="All"${filterPromptPlatform==='All'?' selected':''}>All platforms</option>${platformOpts}
+    </select>
+    <span class="filter-count">${filtered.length} prompt${filtered.length!==1?'s':''}</span>
+    <button class="btn-ghost btn-sm" onclick="loadPrompts()" style="margin-left:auto">↻ Refresh</button>
+  </div>`;
+
+  if (!filtered.length) {
+    html += `<div class="empty"><div class="empty-icon">💡</div><div class="empty-title">No prompts saved yet</div><div class="empty-sub">When something works well, save it here so the whole team can use it.</div></div>`;
+  } else {
+    html += '<div class="prompt-cards">';
+    filtered.forEach(p => {
+      const pc = PLATFORM_COLORS[p.platform] || '#94a3b8';
+      const om = OUTCOME_META[p.outcome] || OUTCOME_META.success;
+      html += `<div class="prompt-card">
+        <div class="entry-header">
+          <div class="entry-title">${p.useCase||'—'}</div>
+        </div>
+        <div class="entry-badges">
+          ${badge(p.platform||'—', pc)}
+          ${p.outcome ? badge(om.label, om.color, om.bg) : ''}
+        </div>
+        <div class="prompt-text">${(p.promptText||'').replace(/</g,'&lt;')}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <button class="copy-btn" onclick="copyPrompt(this, \`${(p.promptText||'').replace(/`/g,'\\`')}\`)">📋 Copy prompt</button>
+          ${p.experimenter ? `<div class="entry-experimenter" style="font-size:11px">${avatarHtml(p.experimenter)}&nbsp;${p.experimenter}</div>` : ''}
+        </div>
+        ${p.notes ? `<p style="font-size:12px;color:#64748b;margin-top:8px;line-height:1.5">${p.notes}</p>` : ''}
+      </div>`;
+    });
+    html += '</div>';
+  }
+  document.getElementById('view-prompts').innerHTML = html;
+}
+
+function copyPrompt(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy prompt', 2000);
+  });
+}
+
+function renderAddPrompt() {
+  const platformOpts = PLATFORMS.map(p=>`<option>${p}</option>`).join('');
+  const useCaseOpts = USE_CASES.map(u=>`<option>${u}</option>`).join('');
+  document.getElementById('view-add-prompt').innerHTML = `
+    <div class="form-wrap">
+      <div class="form-title">💡 Save a prompt to the library</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input id="p-experimenter" class="form-input" placeholder="e.g. Yess" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Use case</label>
+          <input id="p-usecase" class="form-input" placeholder="Select or type…" list="p-usecase-list" autocomplete="off" />
+          <datalist id="p-usecase-list">${useCaseOpts}</datalist>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Platform it works on</label>
+          <select id="p-platform" class="form-input">${platformOpts}</select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">How well did it work?</label>
+          <select id="p-outcome" class="form-input">
+            <option value="success">✅ Works great</option>
+            <option value="partial">⚠️ Works partially</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label class="form-label">The prompt</label>
+        <textarea id="p-prompt" class="form-input" rows="5" placeholder="Paste the prompt here exactly as you used it…"></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label">Notes (optional)</label>
+        <input id="p-notes" class="form-input" placeholder="Any tips on how to use it or customize it…" />
+      </div>
+      <div class="form-actions">
+        <button class="btn-green" onclick="savePrompt()">Save to library</button>
+        <button class="btn-ghost" onclick="showView('prompts')">Cancel</button>
+      </div>
+    </div>`;
+}
+
+async function savePrompt() {
+  const useCase = document.getElementById('p-usecase').value.trim();
+  const promptText = document.getElementById('p-prompt').value.trim();
+  if (!useCase || !promptText) { toast('Please fill in Use case and the Prompt', '#f87171'); return; }
+  const btn = document.querySelector('#view-add-prompt .btn-green');
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  const row = {
+    id: Date.now().toString(),
+    date: new Date().toISOString().slice(0,10),
+    experimenter: document.getElementById('p-experimenter').value.trim(),
+    useCase,
+    platform: document.getElementById('p-platform').value,
+    promptText,
+    outcome: document.getElementById('p-outcome').value,
+    notes: document.getElementById('p-notes').value.trim(),
+    sheet: 'Prompts'
+  };
+  try {
+    await postRow(row);
+    prompts.unshift(row);
+    showView('prompts');
+    toast('Prompt saved to library ✓');
+  } catch(e) {
+    toast('Error saving — check your connection', '#f87171');
+    btn.textContent = 'Save to library'; btn.disabled = false;
+  }
+  renderStats();
+}
+
+// ---- INSIGHTS ----
 function renderInsights() {
   const used = PLATFORMS.filter(p=>entries.some(e=>e.platform===p));
   if (!used.length) {
@@ -370,83 +531,50 @@ function renderInsights() {
     const pc = PLATFORM_COLORS[p]||'#94a3b8';
     const uses = [...new Set(pe.map(e=>e.useCase))].join(', ');
     html += `<div class="insight-card">
-      <div class="insight-top">
-        <span class="insight-platform" style="color:${pc}">${p}</span>
-        <span class="insight-pct" style="color:${pc}">${rate}%</span>
-      </div>
+      <div class="insight-top"><span class="insight-platform" style="color:${pc}">${p}</span><span class="insight-pct" style="color:${pc}">${rate}%</span></div>
       <div class="insight-bar-bg"><div class="insight-bar-fill" style="width:${rate}%;background:${pc}"></div></div>
       <div class="insight-details">${ps} success${ps!==1?'es':''} out of ${pe.length} attempt${pe.length!==1?'s':''}</div>
       <div class="insight-uses">Used for: ${uses}</div>
     </div>`;
   });
   html += '</div>';
-
-  // experimenter breakdown
-  const exps = getExperimenters();
-  if (exps.length > 0) {
+  const exps = [...new Set(entries.map(e=>e.experimenter).filter(Boolean))].sort();
+  if (exps.length) {
     html += '<h2 style="font-size:17px;font-weight:800;margin:28px 0 16px">Team breakdown</h2><div class="insights-grid">';
     exps.forEach(exp => {
       const ee = entries.filter(e=>e.experimenter===exp);
       const es = ee.filter(e=>e.outcome==='success').length;
       const er = Math.round(es/ee.length*100);
       html += `<div class="insight-card">
-        <div class="insight-top">
-          <span class="insight-platform" style="color:#818cf8">${exp}</span>
-          <span class="insight-pct" style="color:#818cf8">${er}%</span>
-        </div>
+        <div class="insight-top"><span class="insight-platform" style="color:#818cf8">${exp}</span><span class="insight-pct" style="color:#818cf8">${er}%</span></div>
         <div class="insight-bar-bg"><div class="insight-bar-fill" style="width:${er}%;background:linear-gradient(90deg,#818cf8,#c084fc)"></div></div>
         <div class="insight-details">${ee.length} experiment${ee.length!==1?'s':''} logged</div>
-        <div class="insight-uses">Uses: ${[...new Set(ee.map(e=>e.platform))].join(', ')}</div>
+        <div class="insight-uses">Platforms: ${[...new Set(ee.map(e=>e.platform))].join(', ')}</div>
       </div>`;
     });
     html += '</div>';
   }
-
   document.getElementById('view-insights').innerHTML = html;
 }
 
+// ---- ROUTING ----
 function showView(v) {
   currentView = v;
-  ['log','add','insights'].forEach(id => {
+  ['log','add','prompts','add-prompt','insights'].forEach(id => {
     document.getElementById('view-'+id).style.display = id===v?'block':'none';
     const tab = document.getElementById('tab-'+id);
     if (tab) tab.classList.toggle('active', id===v);
   });
   if (v==='log') renderLog();
   if (v==='add') renderAdd();
+  if (v==='prompts') { renderPrompts(); if (!prompts.length) loadPrompts(); }
+  if (v==='add-prompt') renderAddPrompt();
   if (v==='insights') renderInsights();
-  renderStats();
 }
 
-function saveEntry() {
-  const useCase = document.getElementById('f-usecase').value;
-  const notes = document.getElementById('f-notes').value.trim();
-  if (!useCase || !notes) { toast('Please fill in Use case and Notes'); return; }
-  entries.unshift({
-    id: Date.now(),
-    date: new Date().toISOString().slice(0,10),
-    experimenter: document.getElementById('f-experimenter').value.trim(),
-    useCase,
-    platform: document.getElementById('f-platform').value,
-    outcome: document.getElementById('f-outcome').value,
-    timeMin: parseInt(document.getElementById('f-time').value)||0,
-    notes,
-    tags: document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
-  });
-  save();
-  showView('log');
-  toast('Experiment logged ✓');
-}
-
-function deleteEntry(id) {
-  entries = entries.filter(e=>e.id!==id);
-  save();
-  renderLog();
-  renderStats();
-  toast('Entry removed');
-}
-
-showView('log');
+// ---- INIT ----
+renderStats();
+loadEntries();
 </script>
 </body>
 </html>
