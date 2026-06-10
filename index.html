@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HR AI Experiment Tracker</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0e1118; color: #f1f5f9; min-height: 100vh; }
+  input, select, textarea, button { font-family: inherit; }
+
+  /* Layout */
+  .header { border-bottom: 1px solid #1e2433; padding: 18px 28px 0; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+  .header-eyebrow { font-size: 11px; color: #818cf8; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+  h1 { font-size: 20px; font-weight: 700; }
+  .tabs { display: flex; gap: 0; }
+  .tab { padding: 8px 18px; background: transparent; color: #64748b; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-size: 13px; font-weight: 400; transition: color .15s; }
+  .tab.active { background: #1e2433; color: #f1f5f9; border-bottom-color: #818cf8; font-weight: 600; }
+
+  .stats-strip { display: flex; gap: 12px; padding: 16px 28px; border-bottom: 1px solid #1e2433; flex-wrap: wrap; }
+  .stat-card { background: #181c24; border: 1px solid #252a36; border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 120px; }
+  .stat-label { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 700; color: #f1f5f9; line-height: 1; }
+  .stat-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  .main { padding: 20px 28px; }
+
+  /* Buttons */
+  .btn-primary { background: #818cf8; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-primary:disabled { opacity: .4; cursor: default; }
+  .btn-ghost { background: transparent; color: #64748b; border: 1px solid #252a36; border-radius: 8px; padding: 9px 14px; font-size: 13px; cursor: pointer; }
+
+  /* Form */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-label { font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  .form-input { background: #0e1118; border: 1px solid #252a36; border-radius: 8px; padding: 9px 12px; color: #f1f5f9; font-size: 14px; outline: none; width: 100%; }
+  .form-input:focus { border-color: #818cf8; }
+  textarea.form-input { resize: vertical; }
+
+  /* Filters */
+  .filters { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+  .filter-select { background: #0e1118; border: 1px solid #252a36; border-radius: 8px; padding: 8px 10px; color: #f1f5f9; font-size: 12px; outline: none; }
+  .filter-count { font-size: 12px; color: #64748b; }
+
+  /* Entries */
+  .entries { display: flex; flex-direction: column; gap: 10px; }
+  .entry-card { background: #181c24; border: 1px solid #252a36; border-radius: 10px; padding: 14px 16px; }
+  .entry-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .entry-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .entry-title { font-size: 14px; font-weight: 600; }
+  .entry-meta { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+  .entry-date { font-size: 11px; color: #475569; }
+  .entry-time { font-size: 11px; color: #475569; }
+  .entry-delete { background: none; border: none; color: #475569; cursor: pointer; font-size: 16px; padding: 0; line-height: 1; }
+  .entry-delete:hover { color: #f87171; }
+  .entry-notes { font-size: 13px; color: #94a3b8; line-height: 1.6; }
+  .entry-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .entry-tag { font-size: 11px; color: #475569; background: #1e2433; padding: 2px 8px; border-radius: 12px; }
+
+  /* Badge */
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; white-space: nowrap; }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 60px 0; color: #64748b; }
+  .empty-icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .empty-sub { font-size: 13px; }
+
+  /* Insights */
+  .insight-card { background: #181c24; border: 1px solid #252a36; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; max-width: 640px; }
+  .insight-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .insight-platform { font-size: 14px; font-weight: 600; }
+  .insight-stats { font-size: 13px; color: #64748b; }
+  .progress-bar { height: 6px; background: #252a36; border-radius: 4px; }
+  .progress-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+  .insight-uses { font-size: 11px; color: #475569; margin-top: 6px; }
+
+  /* Toast */
+  #toast { position: fixed; top: 20px; right: 20px; background: #1e2433; border: 1px solid #34d399; color: #34d399; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 999; display: none; }
+
+  @media (max-width: 600px) {
+    .header, .stats-strip, .main { padding-left: 16px; padding-right: 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .stats-strip { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-eyebrow">HR Innovation Lab</div>
+      <h1>AI Experiment Tracker</h1>
+    </div>
+    <button class="btn-primary" onclick="showView('add')">+ Log experiment</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" id="tab-log" onclick="showView('log')">Experiments</button>
+    <button class="tab" id="tab-insights" onclick="showView('insights')">Insights</button>
+  </div>
+</div>
+
+<div class="stats-strip" id="stats-strip"></div>
+
+<div class="main">
+  <div id="view-log"></div>
+  <div id="view-add" style="display:none"></div>
+  <div id="view-insights" style="display:none"></div>
+</div>
+
+<script>
+const PLATFORMS = ["Claude","ChatGPT","Gemini","Microsoft Copilot","Org Tool","Perplexity","Other"];
+const USE_CASES = ["Writing / Drafting","Summarizing","Policy Research","Job Description","Performance Review","Data Analysis","Employee Comms","Meeting Prep","Other"];
+const OUTCOME_META = {
+  success: { label: "Success",  color: "#34d399", bg: "#0d2b1e" },
+  partial:  { label: "Partial",  color: "#fbbf24", bg: "#2b1f06" },
+  fail:     { label: "Didn't work", color: "#f87171", bg: "#2b0f0f" },
+};
+const PLATFORM_COLORS = {
+  "Claude":"#c084fc","ChatGPT":"#34d399","Gemini":"#60a5fa",
+  "Microsoft Copilot":"#818cf8","Org Tool":"#94a3b8","Perplexity":"#f472b6","Other":"#fb923c"
+};
+
+let entries = JSON.parse(localStorage.getItem('hr-ai-entries') || 'null') || [
+  { id:1, date:"2026-06-02", useCase:"Job Description",    platform:"Claude",    outcome:"success", timeMin:15, notes:"Generated a solid HRBP JD in one pass. Needed minor edits for tone.", tags:["recruiting"] },
+  { id:2, date:"2026-06-04", useCase:"Summarizing",        platform:"Org Tool",  outcome:"partial",  timeMin:25, notes:"Uploaded exit interview data but summary was too generic. Missing nuance.", tags:["retention"] },
+  { id:3, date:"2026-06-06", useCase:"Performance Review", platform:"ChatGPT",   outcome:"success", timeMin:20, notes:"Good at rewriting vague manager feedback into specific, actionable language.", tags:["performance"] },
+];
+
+let filterPlatform = "All", filterOutcome = "All", currentView = "log";
+
+function save() { localStorage.setItem('hr-ai-entries', JSON.stringify(entries)); }
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 2500);
+}
+
+function badge(text, color, bg) {
+  return `<span class="badge" style="color:${color};background:${bg||color+'22'}">${text}</span>`;
+}
+
+function stats() {
+  const total = entries.length;
+  const successes = entries.filter(e => e.outcome === 'success').length;
+  const rate = total ? Math.round(successes/total*100) : 0;
+  const counts = {};
+  entries.filter(e=>e.outcome==='success').forEach(e=>{ counts[e.platform]=(counts[e.platform]||0)+1; });
+  const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
+  const timed = entries.filter(e=>e.timeMin);
+  const avg = timed.length ? Math.round(timed.reduce((s,e)=>s+e.timeMin,0)/timed.length) : 0;
+  return { total, rate, top, avg };
+}
+
+function renderStats() {
+  const s = stats();
+  document.getElementById('stats-strip').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Total logged</div><div class="stat-value">${s.total}</div><div class="stat-sub">experiments</div></div>
+    <div class="stat-card"><div class="stat-label">Success rate</div><div class="stat-value">${s.rate}%</div><div class="stat-sub">of attempts</div></div>
+    <div class="stat-card"><div class="stat-label">Top platform</div><div class="stat-value" style="font-size:18px;padding-top:4px">${s.top}</div><div class="stat-sub">by successes</div></div>
+    <div class="stat-card"><div class="stat-label">Avg time</div><div class="stat-value">${s.avg ? s.avg+'m' : '—'}</div><div class="stat-sub">per experiment</div></div>
+  `;
+}
+
+function renderLog() {
+  const filtered = entries.filter(e =>
+    (filterPlatform === 'All' || e.platform === filterPlatform) &&
+    (filterOutcome === 'All' || e.outcome === filterOutcome)
+  );
+  const platformOpts = PLATFORMS.map(p => `<option${filterPlatform===p?' selected':''}>${p}</option>`).join('');
+  let html = `<div class="filters">
+    <select class="filter-select" onchange="filterPlatform=this.value;renderLog()">
+      <option${filterPlatform==='All'?' selected':''}>All platforms</option>${platformOpts}
+    </select>
+    <select class="filter-select" onchange="filterOutcome=this.value;renderLog()">
+      <option value="All"${filterOutcome==='All'?' selected':''}>All outcomes</option>
+      <option value="success"${filterOutcome==='success'?' selected':''}>Success</option>
+      <option value="partial"${filterOutcome==='partial'?' selected':''}>Partial</option>
+      <option value="fail"${filterOutcome==='fail'?' selected':''}>Didn't work</option>
+    </select>
+    <span class="filter-count">${filtered.length} entr${filtered.length===1?'y':'ies'}</span>
+  </div>`;
+  if (!filtered.length) {
+    html += `<div class="empty"><div class="empty-icon">🧪</div><div class="empty-title">No experiments yet</div><div class="empty-sub">Log your first one to get started.</div></div>`;
+  } else {
+    html += '<div class="entries">';
+    filtered.forEach(e => {
+      const om = OUTCOME_META[e.outcome];
+      const pc = PLATFORM_COLORS[e.platform] || '#94a3b8';
+      const tags = e.tags.length ? `<div class="entry-tags">${e.tags.map(t=>`<span class="entry-tag">#${t}</span>`).join('')}</div>` : '';
+      html += `<div class="entry-card">
+        <div class="entry-top">
+          <div class="entry-badges">
+            <span class="entry-title">${e.useCase}</span>
+            ${badge(e.platform, pc)}
+            ${badge(om.label, om.color, om.bg)}
+          </div>
+          <div class="entry-meta">
+            <span class="entry-date">${e.date}</span>
+            ${e.timeMin ? `<span class="entry-time">${e.timeMin}m</span>` : ''}
+            <button class="entry-delete" onclick="deleteEntry(${e.id})" title="Remove">×</button>
+          </div>
+        </div>
+        <p class="entry-notes">${e.notes}</p>
+        ${tags}
+      </div>`;
+    });
+    html += '</div>';
+  }
+  document.getElementById('view-log').innerHTML = html;
+}
+
+function renderAdd() {
+  const platformOpts = PLATFORMS.map(p => `<option>${p}</option>`).join('');
+  const useCaseOpts = USE_CASES.map(u => `<option>${u}</option>`).join('');
+  document.getElementById('view-add').innerHTML = `
+    <div style="max-width:580px">
+      <h2 style="font-size:17px;font-weight:700;margin-bottom:20px">Log a new experiment</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Use case</label>
+          <select id="f-usecase" class="form-input"><option value="">Select…</option>${useCaseOpts}</select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Platform</label>
+          <select id="f-platform" class="form-input">${platformOpts}</select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Outcome</label>
+          <select id="f-outcome" class="form-input">
+            <option value="success">✅ Success</option>
+            <option value="partial">⚠️ Partial</option>
+            <option value="fail">❌ Didn't work</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time spent (minutes)</label>
+          <input id="f-time" type="number" placeholder="e.g. 20" class="form-input" />
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label class="form-label">What did you try? What happened?</label>
+        <textarea id="f-notes" class="form-input" rows="4" placeholder="Briefly describe what you tried and what the result was…"></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label class="form-label">Tags (comma-separated, optional)</label>
+        <input id="f-tags" class="form-input" placeholder="e.g. recruiting, performance" />
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-primary" onclick="saveEntry()">Save experiment</button>
+        <button class="btn-ghost" onclick="showView('log')">Cancel</button>
+      </div>
+    </div>`;
+}
+
+function renderInsights() {
+  const used = PLATFORMS.filter(p => entries.some(e => e.platform === p));
+  if (!used.length) {
+    document.getElementById('view-insights').innerHTML = `<div class="empty"><div class="empty-icon">📊</div><div class="empty-title">No data yet</div><div class="empty-sub">Log some experiments first.</div></div>`;
+    return;
+  }
+  let html = '<h2 style="font-size:17px;font-weight:700;margin-bottom:20px">Platform breakdown</h2>';
+  used.forEach(p => {
+    const pe = entries.filter(e => e.platform === p);
+    const ps = pe.filter(e => e.outcome === 'success').length;
+    const rate = Math.round(ps/pe.length*100);
+    const pc = PLATFORM_COLORS[p] || '#94a3b8';
+    const uses = [...new Set(pe.map(e=>e.useCase))].join(', ');
+    html += `<div class="insight-card">
+      <div class="insight-header">
+        <span class="insight-platform" style="color:${pc}">${p}</span>
+        <span class="insight-stats">${ps}/${pe.length} successes · ${rate}%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${rate}%;background:${pc}"></div></div>
+      <div class="insight-uses">Used for: ${uses}</div>
+    </div>`;
+  });
+  document.getElementById('view-insights').innerHTML = html;
+}
+
+function showView(v) {
+  currentView = v;
+  ['log','add','insights'].forEach(id => {
+    document.getElementById('view-'+id).style.display = id===v ? 'block' : 'none';
+    const tab = document.getElementById('tab-'+id);
+    if (tab) tab.classList.toggle('active', id===v);
+  });
+  if (v==='log') renderLog();
+  if (v==='add') renderAdd();
+  if (v==='insights') renderInsights();
+  renderStats();
+}
+
+function saveEntry() {
+  const useCase = document.getElementById('f-usecase').value;
+  const notes = document.getElementById('f-notes').value.trim();
+  if (!useCase || !notes) { toast('Please fill in Use case and Notes'); return; }
+  entries.unshift({
+    id: Date.now(),
+    date: new Date().toISOString().slice(0,10),
+    useCase,
+    platform: document.getElementById('f-platform').value,
+    outcome: document.getElementById('f-outcome').value,
+    timeMin: parseInt(document.getElementById('f-time').value) || 0,
+    notes,
+    tags: document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+  });
+  save();
+  showView('log');
+  toast('Experiment logged ✓');
+}
+
+function deleteEntry(id) {
+  entries = entries.filter(e => e.id !== id);
+  save();
+  renderLog();
+  renderStats();
+  toast('Entry removed');
+}
+
+// Init
+showView('log');
+</script>
+</body>
+</html>
